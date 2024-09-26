@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pomodoro Timer</title>
 </head>
-
 <body>
-
+    <div style="text-align: center; margin-top: 20vh;">
+        <h1>Pomodoro Timer</h1>
+        <h2 id="time-display"><span id="minutes">25</span>:<span id="seconds">00</span></h2>
+        <div>
+            <button onclick="startCountdown()">Start</button>
+            <button>Stop</button>
+            <button>Reset</button>
+        </div>
+    </div>
 </body>
+<script>
+    let timeLeft = 1500; // 1500 seconds = 25 minutes
 
+    function updateTimerDisplay(minutes, seconds) {
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+    }
+    
+    function countdown() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+    
+        updateTimerDisplay(minutes, seconds);
+    
+        if (timeLeft > 0) {
+            timeLeft--;
+        } else {
+            clearInterval(timerInterval);
+        }
+    }
+    
+    function startCountdown(){
+        const timerInterval = setInterval(countdown, 100);
+    }
+    
+</script>
 </html>
