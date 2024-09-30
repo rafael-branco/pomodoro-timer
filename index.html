@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer</title>
+    <audio id="alarm">
+        <source src="sounds/alarm.mp3" type="audio/mpeg">
+    </audio>
 </head>
 <body>
     <div style="text-align: center; margin-top: 20vh;">
@@ -14,15 +17,44 @@
             <button onclick="stopCountdown()">Stop</button>
             <button onclick="resetCountdown()">Reset</button>
         </div>
+        <div style="margin-top: 3vh;">
+            <button onclick="breakTime()">5 minute break</button>
+            
+        </div>
+        <div style="margin-top: 1vh;">
+            <button onclick="pomodoroTime()">25 minute Pomodoro</button>
+        </div>
     </div>
 </body>
 <script>
     let timeLeft = 1500; // 1500 seconds = 25 minutes
     let timerInterval;
+    let audio = document.getElementById("alarm");
+   
+    function playAlarm() {
+        audio.play();
+    }
 
     function updateTimerDisplay(minutes, seconds) {
         document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
         document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+    }
+
+
+    function breakTime(){
+        clearInterval(timerInterval);
+        timeLeft = 300;
+        document.getElementById("minutes").textContent = String(5).padStart(2, '0');
+        document.getElementById("seconds").textContent = String(0).padStart(2, '0');
+        startCountdown();
+    }
+
+    function pomodoroTime(){
+        clearInterval(timerInterval);
+        timeLeft = 1500;
+        document.getElementById("minutes").textContent = String(25).padStart(2, '0');
+        document.getElementById("seconds").textContent = String(0).padStart(2, '0');
+        startCountdown();
     }
     
     function countdown() {
@@ -34,6 +66,7 @@
         if (timeLeft > 0) {
             timeLeft--;
         } else {
+            playAlarm()
             clearInterval(timerInterval);
         }
     }
@@ -41,6 +74,8 @@
     function stopCountdown(){
         clearInterval(timerInterval);
     }
+
+
 
     function resetCountdown(){
         timeLeft = 1500;
