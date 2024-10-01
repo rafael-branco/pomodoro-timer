@@ -4,12 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #ff6347;
+        }
+
+        #time-display {
+            font-size: 4rem;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+
+        div button:nth-child(2) {
+            background-color: #ff6347;
+        }
+
+        div button:nth-child(2):hover {
+            background-color: #ff3d2e;
+        }
+
+        div button:nth-child(3) {
+            background-color: #008CBA;
+        }
+
+        div button:nth-child(3):hover {
+            background-color: #007bb5;
+        }
+
+        div {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    
     <audio id="alarm">
         <source src="sounds/alarm.mp3" type="audio/mpeg">
     </audio>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 20vh;">
+    <div>
         <h1>Pomodoro Timer</h1>
         <h2 id="time-display"><span id="minutes">25</span>:<span id="seconds">00</span></h2>
         <div>
@@ -17,11 +93,10 @@
             <button onclick="stopCountdown()">Stop</button>
             <button onclick="resetCountdown()">Reset</button>
         </div>
-        <div style="margin-top: 3vh;">
+        <div>
             <button onclick="breakTime()">5 minute break</button>
-            
         </div>
-        <div style="margin-top: 1vh;">
+        <div>
             <button onclick="pomodoroTime()">25 minute Pomodoro</button>
         </div>
     </div>
@@ -30,6 +105,7 @@
     let timeLeft = 1500; // 1500 seconds = 25 minutes
     let timerInterval;
     let audio = document.getElementById("alarm");
+    let running = false;
    
     function playAlarm() {
         audio.play();
@@ -39,7 +115,6 @@
         document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
         document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
     }
-
 
     function breakTime(){
         clearInterval(timerInterval);
@@ -66,18 +141,18 @@
         if (timeLeft > 0) {
             timeLeft--;
         } else {
-            playAlarm()
+            playAlarm();
             clearInterval(timerInterval);
         }
     }
 
     function stopCountdown(){
+        running = false;
         clearInterval(timerInterval);
     }
 
-
-
     function resetCountdown(){
+        running = false;
         timeLeft = 1500;
         clearInterval(timerInterval);
         document.getElementById("minutes").textContent = String(25).padStart(2, '0');
@@ -85,8 +160,12 @@
     }
     
     function startCountdown(){
-        timerInterval = setInterval(countdown, 10);
+
+        if(!running){
+            running = true;
+            timerInterval = setInterval(countdown, 1000); // Set to 1000ms (1 second)
+        }
+        
     }
-    
 </script>
 </html>
