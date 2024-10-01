@@ -1,6 +1,4 @@
 deployment:
   tasks:
-    - echo "Starting deployment..."
-    - export DEPLOYPATH=/home2/rbproj37/public_html/pomodoro-timer
+    - export DEPLOYPATH=/home2/rbproj37/public_html/
     - /bin/cp -R * $DEPLOYPATH
-    - echo "Deployment completed!"
