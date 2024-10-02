@@ -117,6 +117,7 @@
     }
 
     function breakTime(){
+        running = false;
         clearInterval(timerInterval);
         timeLeft = 300;
         document.getElementById("minutes").textContent = String(5).padStart(2, '0');
@@ -125,6 +126,7 @@
     }
 
     function pomodoroTime(){
+        running = false;
         clearInterval(timerInterval);
         timeLeft = 1500;
         document.getElementById("minutes").textContent = String(25).padStart(2, '0');
